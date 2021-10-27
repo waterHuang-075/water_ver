@@ -1,0 +1,44 @@
+spring:
+  jpa:
+    show-sql: true
+  sql:
+    init:
+      mode: never
+  main:
+    cloud-platform: kubernetes
+    banner-mode: off
+
+server:
+  port: 8804
+  shutdown: graceful # 優雅下線
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    root: info
+    com.github.ct: debug
+
+management:
+  server:
+    port: 9005
+  endpoints:
+    web:
+      exposure:
+        include: "*" # 'health, info, env, prometheus, metrics, httptrace, threaddump, heapdump, loggers'
+  endpoint:
+    shutdown:
+      enabled: true # shutDown RestAPI, UAT 以上環境關閉
+    health:
+      show-details: always # 顯示詳細健康檢查, UAT 以上環境關閉
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  info:
+    git:
+      mode: full
